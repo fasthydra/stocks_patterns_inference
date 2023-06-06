@@ -9,6 +9,8 @@ load_dotenv()
 
 app = FastAPI()
 
+mlflow.set_tracking_uri("http://127.0.0.1:5000")
+
 
 class Model:
     def __init__(self, model_name, model_stage):
@@ -29,7 +31,6 @@ async def create_upload_file(file: UploadFile = File(...)):
     if file.filename.endswith(".csv"):
         with open(file.filename, "wb") as f:
             f.write(file.file.read())
-        # data = np.load(file.filename)
 
         csv_data = np.loadtxt(file.filename, delimiter=",")
         original_shape = (csv_data.shape[0], 30, 1)
