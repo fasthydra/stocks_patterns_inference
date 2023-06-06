@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 import os
+
 import requests
 
 url = "http://127.0.0.1:8001/invocations"
@@ -14,4 +14,3 @@ if response.status_code == 200:
     print("Prediction:", prediction)
 else:
     print("Error:", response.text)
-
