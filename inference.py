@@ -26,6 +26,11 @@ class Model:
 model = Model("KShape", "Staging")
 
 
+@app.get("/")
+def read_root():
+    return {"hello": "world"}
+
+
 @app.post("/invocations")
 async def create_upload_file(file: UploadFile = File(...)):
     if file.filename.endswith(".csv"):

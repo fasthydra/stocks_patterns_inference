@@ -5,7 +5,6 @@ description = ""
 authors = ["Nikc-mk <3kaal6@gmail.com>"]
 readme = "README.md"
 
-
 [tool.poetry.dependencies]
 python = "^3.9"
 python-dotenv = "^1.0.0"
