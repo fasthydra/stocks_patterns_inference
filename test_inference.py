@@ -1,5 +1,5 @@
-import os
 import http.client
+import os
 
 HOST = "localhost"
 PORT = 8000
@@ -22,9 +22,12 @@ headers = {
 }
 
 # Формируем тело запроса с правильным форматом multipart/form-data
-body = b'--boundary\r\nContent-Disposition: form-data; name="file"; filename="file.csv"\r\nContent-Type: application/octet-stream\r\n\r\n'
+body = (
+    b'--boundary\r\nContent-Disposition: form-data; name="file";'
+    b'filename="file.csv"\r\nContent-Type: application/octet-stream\r\n\r\n'
+)
 body += file_content
-body += b'\r\n--boundary--'
+body += b"\r\n--boundary--"
 
 # Отправляем запрос
 conn.request(METHOD, URL, body=body, headers=headers)
