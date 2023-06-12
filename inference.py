@@ -5,16 +5,14 @@ import numpy as np
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
 
+MODEL_NAME = "KShape"
+MODEL_STAGE = "Staging"
+EXPERIMENT_NAME = "test_dvc_new"
+
 load_dotenv()
-
-app = FastAPI()
-
 os.environ["MLFLOW_S3_ENDPOINT_URL"] = os.getenv("MLFLOW_S3_ENDPOINT_URL")
 
-
-@app.get("/")
-def read_root():
-    return {f"{mlflow.set_experiment('log_REG')}": "name"}
+app = FastAPI()
 
 
 class Model:
@@ -28,7 +26,7 @@ class Model:
         return prediction
 
 
-model = Model("KShape", "Staging")
+model = Model(MODEL_NAME, MODEL_STAGE)
 
 
 @app.post("/invocations")
@@ -43,9 +41,14 @@ async def create_upload_file(file: UploadFile = File(...)):
 
         os.remove(file.filename)
 
-        return model.predict(data[:10]).tolist()
+        return model.predict(data).tolist()
     else:
         raise HTTPException(
             status_code=400,
             detail="Invalid file format. Only CSV files accepted.",
         )
+
+
+@app.get("/")
+def read_root():
+    return {f"{mlflow.set_experiment(EXPERIMENT_NAME)}": "name"}
