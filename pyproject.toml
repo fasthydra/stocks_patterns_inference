@@ -3,7 +3,7 @@ name = "stocks-patterns-inference"
 version = "0.1.0"
 description = ""
 authors = ["Nikc-mk <3kaal6@gmail.com>"]
-readme = "README.md"
+readme = ".github/README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"

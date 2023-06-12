@@ -1,16 +1,47 @@
+import http.client
 import os
 
-import requests
+HOST = "localhost"
+PORT = 8000
+METHOD = "POST"
+URL = "/invocations"
+TEST_FILE = "test_inference.csv"
 
-url = "http://127.0.0.1:8001/invocations"
-file_path = "data/sber_clst_2021_1_1.30_10.csv"
+file_path = os.path.abspath(TEST_FILE)
 
-with open(os.path.abspath(file_path), "rb") as file:
-    files = {"file": (file_path, file, "application/octet-stream")}
-    response = requests.post(url, files=files)
+# Открываем файл в бинарном режиме и считываем его содержимое
+with open(file_path, "rb") as file:
+    file_content = file.read()
 
-if response.status_code == 200:
-    prediction = response.content.decode("utf-8")
-    print("Prediction:", prediction)
+# Создаем соединение HTTP
+conn = http.client.HTTPConnection(HOST, PORT)
+
+# Определяем заголовки запроса
+headers = {
+    "Content-Type": "multipart/form-data; boundary=boundary",
+}
+
+# Формируем тело запроса с правильным форматом multipart/form-data
+body = (
+    b'--boundary\r\nContent-Disposition: form-data; name="file";'
+    b'filename="file.csv"\r\nContent-Type: application/octet-stream\r\n\r\n'
+)
+body += file_content
+body += b"\r\n--boundary--"
+
+# Отправляем запрос
+conn.request(METHOD, URL, body=body, headers=headers)
+
+# Получаем ответ
+response = conn.getresponse()
+# Читаем и декодируем содержимое ответа
+response_content = response.read().decode()
+
+if response.status == 200:
+    # prediction = response.content.decode("utf-8")
+    print("Prediction:", response_content)
 else:
     print("Error:", response.text)
+
+# Закрываем соединение
+conn.close()
