@@ -9,7 +9,12 @@ load_dotenv()
 
 app = FastAPI()
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = os.getenv("MLFLOW_S3_ENDPOINT_URL")
+
+
+@app.get("/")
+def read_root():
+    return {f"{mlflow.set_experiment('log_REG')}": "name"}
 
 
 class Model:
@@ -23,12 +28,7 @@ class Model:
         return prediction
 
 
-model = Model("KShape", "Staging")
-
-
-@app.get("/")
-def read_root():
-    return {"hello": "world"}
+model = Model("Log_reg", "Staging")
 
 
 @app.post("/invocations")
