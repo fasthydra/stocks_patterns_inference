@@ -10,6 +10,7 @@ RUN POETRY_VIRTUALENVS_CREATE=false \
   && poetry install --no-interaction --no-ansi
 
 COPY ./.env /code/
+COPY ./src /code/src
 COPY ./inference.py /code/
 
 

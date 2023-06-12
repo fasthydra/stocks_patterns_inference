@@ -28,7 +28,7 @@ class Model:
         return prediction
 
 
-model = Model("Log_reg", "Staging")
+model = Model("KShape", "Staging")
 
 
 @app.post("/invocations")
