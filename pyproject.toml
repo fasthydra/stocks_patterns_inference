@@ -5,7 +5,6 @@ description = ""
 authors = ["Nikc-mk <3kaal6@gmail.com>"]
 readme = "README.md"
 
-
 [tool.poetry.dependencies]
 python = "^3.9"
 python-dotenv = "^1.0.0"
@@ -21,6 +20,7 @@ uvicorn = "^0.22.0"
 boto3 = "^1.26.147"
 tslearn = "^0.5.3.2"
 python-multipart = "^0.0.6"
+h5py = "^3.8.0"
 
 
 [build-system]
