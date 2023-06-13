@@ -13,7 +13,6 @@ COPY ./.env /code/
 COPY ./src /code/src
 COPY ./inference.py /code/
 
-
-
+CMD ["poetry", "run", "uvicorn", "inference:app", "--host", "0.0.0.0", "--port", "8001"]
 
 
