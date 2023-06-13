@@ -2,7 +2,7 @@ import http.client
 import os
 
 HOST = "localhost"
-PORT = 8000
+PORT = 8001
 METHOD = "POST"
 URL = "/invocations"
 TEST_FILE = "test_inference.csv"
@@ -23,7 +23,7 @@ headers = {
 
 # Формируем тело запроса с правильным форматом multipart/form-data
 body = (
-    b'--boundary\r\nContent-Disposition: form-data; name="file";'
+    b'--boundary\r\nContent-Disposition: form-data; name="file"; '
     b'filename="file.csv"\r\nContent-Type: application/octet-stream\r\n\r\n'
 )
 body += file_content

@@ -10,7 +10,6 @@ MODEL_STAGE = "Staging"
 EXPERIMENT_NAME = "test_dvc_new"
 
 load_dotenv()
-os.environ["MLFLOW_S3_ENDPOINT_URL"] = os.getenv("MLFLOW_S3_ENDPOINT_URL")
 
 app = FastAPI()
 
