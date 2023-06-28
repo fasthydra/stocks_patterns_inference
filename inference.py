@@ -1,3 +1,4 @@
+import base64
 import os
 
 import mlflow
@@ -7,11 +8,24 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 
 MODEL_NAME = "KShape"
 MODEL_STAGE = "Staging"
-EXPERIMENT_NAME = "test_dvc_new"
+EXPERIMENT_NAME = "mlflow_test"
 
 load_dotenv()
 
 app = FastAPI()
+
+server_url = os.environ.get("MLFLOW_TRACKING_URI")
+username = os.environ.get("NGINX_LOGIN")
+password = os.environ.get("NGINX_PASSWORD")
+
+# Кодирование учетных данных в base64
+basic_auth = base64.b64encode(f"{username}:{password}".encode()).decode()
+
+# Формирование полного URI, включая аутентификационные данные
+auth_server_url = f"http://{username}:{password}@{server_url}"
+
+# Установка адреса сервера с учетными данными
+mlflow.set_tracking_uri(auth_server_url)
 
 
 class Model:
